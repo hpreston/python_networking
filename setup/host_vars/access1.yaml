@@ -1,3 +1,9 @@
+provider:
+  host: "{{ ansible_host }}"
+  username: cisco
+  password: cisco
+  port: 22
+  timeout: 15
 l3_interfaces:
   - interface_type: Loopback
     interface_id: 0

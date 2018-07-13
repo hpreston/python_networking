@@ -1,3 +1,9 @@
+provider:
+  host: "{{ ansible_host }}"
+  username: cisco
+  password: cisco
+  port: 22
+  timeout: 15
 ospf_router_id: 192.168.0.2
 vpc_pkl_src: 172.16.30.102
 vpc_pkl_dest: 172.16.30.101
