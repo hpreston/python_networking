@@ -17,14 +17,14 @@ l3_interfaces:
     area: 0
   - interface_type: Ethernet
     interface_id: 1/5
-    description: L3 Link to ios-xev-1
+    description: L3 Link to core1
     ip_address: 172.16.0.2
     subnet_mask: 255.255.255.252
     prefix: 30
     area: 0
   - interface_type: Ethernet
     interface_id: 1/6
-    description: L3 Link to ios-xev-2
+    description: L3 Link to core2
     ip_address: 172.16.0.10
     subnet_mask: 255.255.255.252
     prefix: 30

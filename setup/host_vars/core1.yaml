@@ -9,19 +9,19 @@ provider:
 l3_interfaces:
   - interface_type: GigabitEthernet
     interface_id: 2
-    description: L3 Link to nx-osv9000-1
+    description: L3 Link to dist1
     ip_address: 172.16.0.1
     subnet_mask: 255.255.255.252
     prefix: 30
   - interface_type: GigabitEthernet
     interface_id: 3
-    description: L3 Link to nx-osv9000-2
+    description: L3 Link to dist2
     ip_address: 172.16.0.5
     subnet_mask: 255.255.255.252
     prefix: 30
   - interface_type: GigabitEthernet
     interface_id: 4
-    description: L3 Link to ios-xev-2
+    description: L3 Link to core2
     ip_address: 172.16.0.17
     subnet_mask: 255.255.255.252
     prefix: 30
