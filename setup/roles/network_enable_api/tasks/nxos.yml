@@ -1,0 +1,7 @@
+---
+- name: Enable NX-API
+  tags: [api, nxapi]
+  nxos_feature:
+    provider: "{{provider}}"
+    feature: nxapi
+    state: enabled

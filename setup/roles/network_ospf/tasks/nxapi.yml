@@ -1,0 +1,25 @@
+---
+- name: Enable Features
+  tags: [api, nxapi, ospf]
+  with_items:
+    - ospf
+  nxos_feature:
+    provider: "{{provider}}"
+    feature: "{{ item }}"
+    state: enabled
+
+- name: Configure OSPF
+  tags: [api, nxapi, ospf]
+  nxos_ospf:
+    provider: "{{provider}}"
+    ospf: "{{ ospf.process_id }}"
+    state: present
+
+- name: Configure OSPF Interfaces
+  tags: [api, nxapi, ospf]
+  with_items: "{{ ospf.networks }}"
+  nxos_interface_ospf:
+    provider: "{{provider}}"
+    interface: "{{ item.interface }}"
+    ospf: "{{ ospf.process_id }}"
+    area: "{{ item.area }}"

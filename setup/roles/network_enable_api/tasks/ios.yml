@@ -1,0 +1,12 @@
+---
+- name: Configure NETCONF
+  tags: [api, netconf]
+  ios_config:
+    provider: "{{provider}}"
+    lines:
+      - netconf-yang
+      - netconf-yang cisco-odm polling-enable
+
+- name: Pause for NETCONF to start
+  pause:
+    seconds: 45

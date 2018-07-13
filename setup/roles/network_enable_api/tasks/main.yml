@@ -1,0 +1,8 @@
+---
+# tasks file for network_enable_api
+- name: IOS Devices
+  include_tasks: ios.yml
+  when: ansible_network_os == "ios"
+- name: NX-OS Devices
+  include_tasks: nxos.yml
+  when: ansible_network_os == "nxos"

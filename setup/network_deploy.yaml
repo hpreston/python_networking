@@ -1,0 +1,55 @@
+---
+- name: Wait for all devices to be available
+  hosts: all
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - wait_for:
+        port: 22
+        sleep: 10
+
+- name: Gather Facts about Network
+  hosts: all
+  connection: network_cli
+  gather_facts: false
+
+  roles:
+    - network_inspect
+
+- name: Enable Network APIs
+  hosts: all
+  connection: network_cli
+  gather_facts: false
+
+  roles:
+    - network_enable_api
+
+- name: Configure Network Core
+  hosts: core
+  connection: local
+  gather_facts: false
+
+  roles:
+    - network_interface
+    - network_ospf
+
+- name: Configure Distribution Switches
+  hosts: distribution
+  connection: network_cli
+  gather_facts: false
+
+  roles:
+    - network_vlan
+    - network_vpc
+    - network_interface
+    - network_ospf
+
+- name: Configure Access Switches
+  hosts: access
+  connection: network_cli
+  gather_facts: false
+
+  roles:
+    - network_vlan
+    - network_interface

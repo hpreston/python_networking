@@ -1,0 +1,4 @@
+---
+- name: Gather NX-OS Facts
+  nxos_facts:
+    provider: "{{ provider }}"

@@ -1,0 +1,14 @@
+---
+# tasks file for network_interface
+- name: IOS Devices L3 Interfaces
+  include_tasks: l3_netconf.yml
+  when: ansible_network_os == "ios" and l3_interfaces is defined
+- name: NX-OS Devices L3 Interfaces
+  include_tasks: l3_nxapi.yml
+  when: ansible_network_os == "nxos" and l3_interfaces is defined
+- name: NX-OS Devices HSRP Configuration
+  include_tasks: hsrp_nxapi.yml
+  when: ansible_network_os == "nxos" and hsrp is defined
+- name: NX-OS Devices PortChannels
+  include_tasks: portchannel_nxapi.yml
+  when: ansible_network_os == "nxos" and portchannels is defined

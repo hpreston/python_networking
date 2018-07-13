@@ -1,0 +1,18 @@
+---
+- name: "Generate NETCONF Interface config"
+  tags: [api, netconf, layer3]
+  with_items: "{{l3_interfaces}}"
+  template:
+    src: "templates/ietf_interface_template.j2"
+    dest: "./configs/{{inventory_hostname}}-{{item.interface_type}}{{item.interface_id}}.xml"
+
+- name: Configure Interfaces with NETCONF
+  tags: [api, netconf, layer3]
+  with_items: "{{l3_interfaces}}"
+  netconf_config:
+    host: "{{provider.host}}"
+    hostkey_verify: false
+    username: "{{provider.username}}"
+    password: "{{provider.password}}"
+    port: "{{netconf_port | default(830)}}"
+    src: "./configs/{{inventory_hostname}}-{{item.interface_type}}{{item.interface_id}}.xml"

@@ -1,0 +1,8 @@
+---
+# tasks file for network_vlan
+# - name: IOS Devices
+#   include_tasks: netconf.yml
+#   when: device_type == "ios" and ospf is defined
+- name: NX-OS Devices
+  include_tasks: nxapi.yml
+  when: ansible_network_os == "nxos" and vlans is defined

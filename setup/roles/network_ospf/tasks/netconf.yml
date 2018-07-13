@@ -1,0 +1,17 @@
+---
+- name: "Generate NETCONF OSPF config"
+  tags: [api, netconf, ospf]
+  when: (ansible_network_os == "ios" and ansible_net_version == "16.03.01")
+  template:
+    src: "templates/ned_ospf.j2"
+    dest: "./configs/{{inventory_hostname}}-ospf.xml"
+
+- name: Configure OSPF with NETCONF
+  tags: [api, netconf, ospf]
+  netconf_config:
+    host: "{{provider.host}}"
+    hostkey_verify: false
+    username: "{{provider.username}}"
+    password: "{{provider.password}}"
+    port: "{{netconf_port | default(830)}}"
+    src: "./configs/{{inventory_hostname}}-ospf.xml"
