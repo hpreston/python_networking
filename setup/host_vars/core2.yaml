@@ -1,3 +1,11 @@
+provider:
+  host: "{{ ansible_host }}"
+  username: cisco
+  password: cisco
+  auth_pass: cisco
+  authorize: yes
+  port: 22
+  timeout: 20
 l3_interfaces:
   - interface_type: GigabitEthernet
     interface_id: 2

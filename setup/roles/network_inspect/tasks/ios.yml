@@ -2,3 +2,4 @@
 - name: Gather IOS Facts
   ios_facts:
     provider: "{{ provider }}"
+    gather_subset: all
