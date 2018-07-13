@@ -1,7 +1,7 @@
 ---
 - name: "Generate NETCONF OSPF config"
   tags: [api, netconf, ospf]
-  when: (ansible_network_os == "ios" and ansible_net_version == "16.03.01")
+  when: (ansible_network_os == "ios")
   template:
     src: "templates/ned_ospf.j2"
     dest: "./configs/{{inventory_hostname}}-ospf.xml"
