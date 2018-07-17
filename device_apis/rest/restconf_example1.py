@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-"""Sample use of the requests library for RESTCONFself.
+"""Sample use of the requests library for RESTCONF.
 
 This script will retrieve information from a device.
 
