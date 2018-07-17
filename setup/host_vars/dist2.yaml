@@ -3,7 +3,7 @@ provider:
   username: cisco
   password: cisco
   auth_pass: cisco
-  authorize: yes
+  authorize: no
   port: 22
   timeout: 15
 ospf_router_id: 192.168.0.2

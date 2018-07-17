@@ -1,7 +1,7 @@
 ansible_python_interpreter: /usr/bin/env python
 ansible_user: cisco
 ansible_ssh_pass: cisco
-ansible_become: yes
+ansible_become: no
 ansible_become_method: enable
 ansible_become_pass: cisco
 vlans:
