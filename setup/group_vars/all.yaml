@@ -4,6 +4,8 @@ ansible_ssh_pass: cisco
 ansible_become: no
 ansible_become_method: enable
 ansible_become_pass: cisco
+snmp-ro-community: public
+snmp-rw-community: private
 vlans:
   - id: 100
     name: Management
