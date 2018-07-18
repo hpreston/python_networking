@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 """Sample use of the ncclient library for NETCONF
 
-This script will retrieve information from a device.
+This script will create new configuration on a device.
 
 Copyright (c) 2018 Cisco and/or its affiliates.
 
