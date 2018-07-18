@@ -11,6 +11,6 @@
   nxos_config:
     provider: "{{provider}}"
     lines:
-      - snmp-server community {{ snmp-ro-community | default('public') }} ro
-      - snmp-server community {{ snmp-rw-community | default('public') }} rw
+      - snmp-server community {{ snmp_ro_community | default('public') }} ro
+      - snmp-server community {{ snmp_rw_community | default('private') }} rw
       
