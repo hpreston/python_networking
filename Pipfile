@@ -12,6 +12,8 @@ PyYAML = "==3.13"
 pysnmp = "*"
 ansible = "*"
 virlutils = "*"
+netmiko = "*"
+napalm = "*"
 
 [dev-packages]
 
