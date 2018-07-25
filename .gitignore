@@ -1,6 +1,8 @@
 .virl/
 scratch*
 *.retry
+default_inventory.yaml
+
 
 
 # Byte-compiled / optimized / DLL files
