@@ -27,6 +27,7 @@ SOFTWARE.
 # Import libraries
 import requests, urllib3
 import sys
+import yaml
 
 # Add parent directory to path to allow importing common vars
 sys.path.append("..") # noqa
@@ -43,7 +44,7 @@ interface_url = restconf_base + "/ietf-interfaces:interfaces/interface={int_name
 # Create URL and send RESTCONF request to core1 for GigE2 Config
 url = interface_url.format(ip = device["address"],
                            port = device["restconf_port"],
-                           int_name = "GigabitEthernet2"
+                           int_name = "Loopback101"
                           )
 r = requests.get(url,
         headers = restconf_headers,
@@ -63,4 +64,4 @@ if r.status_code == 200:
             )
         )
 else:
-    print("No interface {} found.".format("GigabitEthernet2"))
+    print("No interface {} found.".format("Loopback101"))

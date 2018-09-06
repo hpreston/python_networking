@@ -25,22 +25,20 @@ SOFTWARE.
 """
 
 # Import libraries
-import requests, urllib3, yaml
+import requests, urllib3, sys, yaml
+
+# Add parent directory to path to allow importing common vars
+sys.path.append("..") # noqa
+from device_info import ios_xe1 as device # noqa
 
 # Disable Self-Signed Cert warning for demo
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Open and read in the mgmt IPs for the demo infrastructure
-with open("../../setup/default_inventory.yaml") as f:
-    devices = yaml.load(f.read())["all"]["children"]
-    core1_ip = devices["core"]["hosts"]["core1"]["ansible_host"]
-    username, password = "cisco", "cisco"
-
 # Setup base variable for request
 restconf_headers = {"Accept": "application/yang-data+json",
                     "Content-Type": "application/yang-data+json"}
-restconf_base = "https://{ip}/restconf/data"
-interface_url = restconf_base + "/interfaces/interface={int_name}"
+restconf_base = "https://{ip}:{port}/restconf/data"
+interface_url = restconf_base + "/ietf-interfaces:interfaces/interface={int_name}"
 
 # New Loopback Details
 loopback = {"name": "Loopback101",
@@ -66,11 +64,14 @@ data = {
     }
 }
 
-# Create URL and send RESTCONF request to core1 for GigE2 Config
-url = interface_url.format(ip = core1_ip, int_name = loopback["name"])
+# Create URL and send RESTCONF request to device
+url = interface_url.format(ip = device["address"],
+                           port = device["restconf_port"],
+                           int_name = loopback["name"]
+                          )
 r = requests.put(url,
         headers = restconf_headers,
-        auth=(username, password),
+        auth=(device["username"], device["password"]),
         json = data,
         verify=False)
 

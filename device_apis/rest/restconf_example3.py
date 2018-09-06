@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 """Sample use of the requests library for RESTCONF.
 
-This script will retrieve information from a device.
+This script will delete information from a device.
 
 Copyright (c) 2018 Cisco and/or its affiliates.
 
@@ -27,6 +27,7 @@ SOFTWARE.
 # Import libraries
 import requests, urllib3
 import sys
+import yaml
 
 # Add parent directory to path to allow importing common vars
 sys.path.append("..") # noqa
@@ -43,24 +44,22 @@ interface_url = restconf_base + "/ietf-interfaces:interfaces/interface={int_name
 # Create URL and send RESTCONF request to core1 for GigE2 Config
 url = interface_url.format(ip = device["address"],
                            port = device["restconf_port"],
-                           int_name = "GigabitEthernet2"
+                           int_name = "Loopback101"
                           )
-r = requests.get(url,
+r = requests.delete(url,
         headers = restconf_headers,
         auth=(device["username"], device["password"]),
         verify=False)
 
 # Print returned data
 print(r.text)
+print("Request Status Code: {}".format(r.status_code))
 
-if r.status_code == 200:
-    # Process JSON data into Python Dictionary and use
-    interface = r.json()["ietf-interfaces:interface"]
-    print("The interface {name} has ip address {ip}/{mask}".format(
-            name = interface["name"],
-            ip = interface["ietf-ip:ipv4"]["address"][0]["ip"],
-            mask = interface["ietf-ip:ipv4"]["address"][0]["netmask"],
-            )
-        )
-else:
-    print("No interface {} found.".format("GigabitEthernet2"))
+# # Process JSON data into Python Dictionary and use
+# interface = r.json()["ietf-interfaces:interface"]
+# print("The interface {name} has ip address {ip}/{mask}".format(
+#         name = interface["name"],
+#         ip = interface["ietf-ip:ipv4"]["address"][0]["ip"],
+#         mask = interface["ietf-ip:ipv4"]["address"][0]["netmask"],
+#         )
+#     )
