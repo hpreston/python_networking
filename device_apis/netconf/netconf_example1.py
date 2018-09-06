@@ -27,13 +27,12 @@ SOFTWARE.
 # Import libraries
 from ncclient import manager
 from xml.dom import minidom
-import yaml, xmltodict
+import xmltodict
+import sys
 
-# Open and read in the mgmt IPs for the demo infrastructure
-with open("../../setup/default_inventory.yaml") as f:
-    devices = yaml.load(f.read())["all"]["children"]
-    core1_ip = devices["core"]["hosts"]["core1"]["ansible_host"]
-    username, password = "cisco", "cisco"
+# Add parent directory to path to allow importing common vars
+sys.path.append("..") # noqa
+from device_info import ios_xe1 as device # noqa
 
 # Create filter template for an interface
 interface_filter = """
@@ -47,10 +46,11 @@ interface_filter = """
 """
 
 # Open NETCONF connection to device
-with manager.connect(host=core1_ip,
-                    username=username,
-                    password=password,
-                    hostkey_verify=False) as m:
+with manager.connect(host = device["address"],
+                     port = device["netconf_port"],
+                     username = device["username"],
+                     password = device["password"],
+                     hostkey_verify = False) as m:
 
     # Create desired NETCONF filter and <get-config>
     filter = interface_filter.format(int_name = "GigabitEthernet2")
@@ -62,11 +62,16 @@ with manager.connect(host=core1_ip,
 
     # Process the XML data into Python Dictionary and use
     interface = xmltodict.parse(r.xml)
-    interface = interface["rpc-reply"]["data"]["interfaces"]["interface"]
 
-    print("The interface {name} has ip address {ip}/{mask}".format(
-            name = interface["name"]["#text"],
-            ip = interface["ipv4"]["address"]["ip"],
-            mask = interface["ipv4"]["address"]["netmask"],
+    # Only if RPC returned data
+    if not interface["rpc-reply"]["data"] is None:
+        interface = interface["rpc-reply"]["data"]["interfaces"]["interface"]
+
+        print("The interface {name} has ip address {ip}/{mask}".format(
+                name = interface["name"]["#text"],
+                ip = interface["ipv4"]["address"]["ip"],
+                mask = interface["ipv4"]["address"]["netmask"],
+                )
             )
-        )
+    else:
+        print("No interface {} found".format("GigabitEthernet2"))
