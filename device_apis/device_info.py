@@ -35,9 +35,22 @@ ios_xe1 = {
              "address": "ios-xe-mgmt.cisco.com",
              "netconf_port": 10000,
              "restconf_port": 9443,
+             "ssh_port": 8181,
              "username": "root",
              "password": "D_Vay!_10&"
           }
+
+# Vagrant option - Uncomment the below if using Vagrant IOS XE Device
+# ios_xe1 = {
+#              "address": "127.0.0.1",
+#              "netconf_port": 2223,
+#              "restconf_port": 2225,
+#              "ssh_port": 2222,
+#              "snmp_port": 2227,
+#              "username": "vagrant",
+#              "password": "vagrant"
+#           }
+
 
 # DevNet Always-On Sandbox APIC-EM
 # https://devnetsandbox.cisco.com/RM/Diagram/Index/2e0f9525-5f46-4f46-973e-0f0c1bf934fa?diagramType=Topology
