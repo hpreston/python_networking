@@ -33,7 +33,6 @@ with open("csv_example.csv") as f:
 # Open the sample csv file, and create a csv.reader object
 with open("csv_example.csv") as f:
     csv_python = csv.reader(f)
-
     # Loop over each row in csv and leverage the data in code
     for row in csv_python:
         print("{device} is in {location} " \
