@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 """Sample use of the netmiko library for CLI interfacing
 
-This script will retrieve information from a device.
+This script will delete configuration on a device.
 
 Copyright (c) 2018 Cisco and/or its affiliates.
 
@@ -26,7 +26,6 @@ SOFTWARE.
 
 # Import libraries
 from netmiko import ConnectHandler
-import re
 import sys
 
 # Add parent directory to path to allow importing common vars
@@ -36,8 +35,13 @@ from device_info import ios_xe1 as device # noqa
 # Set device_type for netmiko
 device["device_type"] = "cisco_ios"
 
-# Create a CLI command template
-show_interface_config_temp = "show running-config interface {}"
+# New Loopback Details
+loopback = {"int_name": "Loopback103"}
+
+# Create a CLI configuration
+interface_config = [
+    "no interface {}".format(loopback["int_name"])
+]
 
 # Open CLI connection to device
 with ConnectHandler(ip = device["address"],
@@ -46,24 +50,9 @@ with ConnectHandler(ip = device["address"],
                     password = device["password"],
                     device_type = device["device_type"]) as ch:
 
-    # Create desired CLI command and send to device
-    command = show_interface_config_temp.format("GigabitEthernet2")
-    interface = ch.send_command(command)
+    # Send configuration to device
+    output = ch.send_config_set(interface_config)
 
     # Print the raw command output to the screen
-    print(interface)
-
-    # Use regular expressions to parse the output for desired data
-    name = re.search(r'interface (.*)', interface).group(1)
-    description = re.search(r'description (.*)', interface).group(1)
-    ip_info = re.search(r'ip address (.*) (.*)', interface)
-    ip = ip_info.group(1)
-    netmask = ip_info.group(2)
-
-    # Print the info to the screen
-    print("The interface {name} has ip address {ip}/{mask}".format(
-            name = name,
-            ip = ip,
-            mask = netmask,
-            )
-        )
+    print("The following configuration was sent: ")
+    print(output)

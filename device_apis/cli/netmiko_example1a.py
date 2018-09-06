@@ -47,7 +47,7 @@ with ConnectHandler(ip = device["address"],
                     device_type = device["device_type"]) as ch:
 
     # Create desired CLI command and send to device
-    command = show_interface_config_temp.format("GigabitEthernet2")
+    command = show_interface_config_temp.format("Loopback103")
     interface = ch.send_command(command)
 
     # Print the raw command output to the screen

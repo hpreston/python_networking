@@ -26,16 +26,14 @@ SOFTWARE.
 
 # Import libraries
 from netmiko import ConnectHandler
-import yaml
+import sys
 
-# Open and read in the mgmt IPs for the demo infrastructure
-with open("../../setup/default_inventory.yaml") as f:
-    devices = yaml.load(f.read())["all"]["children"]
-    core1 = {
-        "ip": devices["core"]["hosts"]["core1"]["ansible_host"],
-        "device_type": "cisco_ios"
-    }
-    username, password = "cisco", "cisco"
+# Add parent directory to path to allow importing common vars
+sys.path.append("..") # noqa
+from device_info import ios_xe1 as device # noqa
+
+# Set device_type for netmiko
+device["device_type"] = "cisco_ios"
 
 # New Loopback Details
 loopback = {"int_name": "Loopback103",
@@ -52,10 +50,11 @@ interface_config = [
 ]
 
 # Open CLI connection to device
-with ConnectHandler(ip=core1["ip"],
-                    username=username,
-                    password=password,
-                    device_type=core1["device_type"]) as ch:
+with ConnectHandler(ip = device["address"],
+                    port = device["ssh_port"],
+                    username = device["username"],
+                    password = device["password"],
+                    device_type = device["device_type"]) as ch:
 
     # Send configuration to device
     output = ch.send_config_set(interface_config)
