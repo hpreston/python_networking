@@ -28,18 +28,18 @@ SOFTWARE.
 
 # Import libraries
 from pysnmp.hlapi import *
-import yaml
+import sys
 
-# Open and read in the mgmt IPs for the demo infrastructure
-with open("../../setup/default_inventory.yaml") as f:
-    devices = yaml.load(f.read())["all"]["children"]
-    core1_ip = devices["core"]["hosts"]["core1"]["ansible_host"]
-    ro_community, rw_community = "public", "private"
+# Add parent directory to path to allow importing common vars
+sys.path.append("..") # noqa
+from device_info import ios_xe1 as device # noqa
+
+ro_community, rw_community = "public", "private"
 
 # Setup SNMP connection and query a MIB
 iterator = getCmd(SnmpEngine(),
                   CommunityData(ro_community),
-                  UdpTransportTarget((core1_ip, 161)),
+                  UdpTransportTarget((device["address"], device["snmp_port"])),
                   ContextData(),
                   ObjectType(ObjectIdentity('SNMPv2-MIB', 'sysDescr', 0)))
 
