@@ -2,7 +2,7 @@
 scratch*
 *.retry
 default_inventory.yaml
-
+.vagrant/
 
 
 # Byte-compiled / optimized / DLL files
