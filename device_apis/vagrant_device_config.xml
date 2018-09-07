@@ -1,0 +1,61 @@
+<config>
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"  xmlns:ios="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+      <hostname>vagrant-iosxe1</hostname>
+      <interface>
+          <GigabitEthernet>
+              <name>1</name>
+              <description>MGMT Interface</description>
+          </GigabitEthernet>
+          <GigabitEthernet>
+              <name>2</name>
+              <description>LAN Interface</description>
+              <shutdown operation="remove" />
+              <ip>
+                  <address>
+                      <primary>
+                          <address>10.2.1.1</address>
+                          <mask>255.255.255.0</mask>
+                      </primary>
+                  </address>
+              </ip>
+              <mop>
+                  <enabled>false</enabled>
+                  <sysid>false</sysid>
+              </mop>
+              <negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
+                  <auto>true</auto>
+              </negotiation>
+          </GigabitEthernet>
+          <GigabitEthernet>
+              <name>3</name>
+              <description>WAN Interface</description>
+              <shutdown operation="remove" />
+              <ip>
+                  <address>
+                      <primary>
+                          <address>10.2.2.1</address>
+                          <mask>255.255.255.0</mask>
+                      </primary>
+                  </address>
+              </ip>
+              <mop>
+                  <enabled>false</enabled>
+                  <sysid>false</sysid>
+              </mop>
+              <negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
+                  <auto>true</auto>
+              </negotiation>
+          </GigabitEthernet>
+      </interface>
+      <snmp-server>
+          <community xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+              <name>private</name>
+              <RW/>
+          </community>
+          <community xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+              <name>public</name>
+              <RO/>
+          </community>
+      </snmp-server>
+  </native>
+</config>
