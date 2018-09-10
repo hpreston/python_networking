@@ -673,14 +673,323 @@ Each exercise also includes a Python script file that can be executed directly.
 
 
 ## NETCONF - ncclient
+
+1. From the root of the `python_networking` repository, change into the exercise directory.  
+
+    ```bash
+    cd device_apis/netconf
+    ```
+
+1. Start an interactive Python interpreter.  Example below:
+
+    ```python
+    # ipython
+    
+    Python 3.6.5 (default, Apr 10 2018, 17:08:37)
+    Type 'copyright', 'credits' or 'license' for more information
+    IPython 6.5.0 -- An enhanced Interactive Python. Type '?' for help.
+    
+    In [1]:
+    ```
+
 ### Retrieve Network Configuration Details with NETCONF - `netconf_example1.py`
+
+1. Import libraries
+
+    ```python
+    from ncclient import manager
+    from xml.dom import minidom
+    import xmltodict
+    import sys
+    ```
+
+1. Add parent directory to path to allow importing common vars
+
+    ```python
+    sys.path.append("..") 
+    from device_info import vagrant_iosxe as device
+    ```
+
+1. Create filter template for an interface
+
+    ```python
+    interface_filter = """
+    <filter>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>{int_name}</name>
+        </interface>
+      </interfaces>
+    </filter>
+    """
+    ```
+
+1. Open NETCONF connection to device. 
+    * *Note: Normally you'd use a `with` block to open connection to device. This avoids needing to manually `m.close_session()` at the end of a script, but for interactive use, this format is chosen.*
+
+    ```python
+    m = manager.connect(host = device["address"],
+                         port = device["netconf_port"],
+                         username = device["username"],
+                         password = device["password"],
+                         hostkey_verify = False)
+    ```
+
+1. Verify NETCONF connection is active. 
+
+    ```python
+    m.connected
+    ```
+
+1. Create desired NETCONF filter for a particular interface.
+    
+    ```python
+    filter = interface_filter.format(int_name = "GigabitEthernet2")
+    ```
+
+1. Execute a NETCONF <get-config> using the filter.
+    
+    ```python
+    r = m.get_config("running", filter)
+    ```
+
+1. Pretty print raw xml to screen
+
+    ```python
+    xml_doc = minidom.parseString(r.xml)
+    print(xml_doc.toprettyxml(indent = "  "))
+    ```
+
+1. Process the XML data into Python Dictionary and use
+
+    ```python
+    interface = xmltodict.parse(r.xml)
+    ```
+    
+1. Pretty Print the full Python (Ordered) Dictionary. 
+
+    ```python
+    from pprint import pprint
+    pprint(interface)
+    ```
+
+1. If RPC returned data, print out the interesting pieces. 
+
+    ```python
+    if not interface["rpc-reply"]["data"] is None:
+        # Create Python variable for interface details
+        interface = interface["rpc-reply"]["data"]["interfaces"]["interface"]
+    
+        print("The interface {name} has ip address {ip}/{mask}".format(
+                name = interface["name"]["#text"],
+                ip = interface["ipv4"]["address"]["ip"],
+                mask = interface["ipv4"]["address"]["netmask"],
+                )
+            )
+    else:
+        print("No interface {} found".format("GigabitEthernet2"))
+    ```
 
 
 ### Modify Network Configuration Details with NETCONF - `netconf_example2.py`
+1. Continuing from previous exercise. If starting from new interpreter, execute these steps.
 
+    ```python
+    from ncclient import manager
+    from xml.dom import minidom
+    import xmltodict
+    import sys
+    sys.path.append("..") 
+    from device_info import vagrant_iosxe as device
+    interface_filter = """
+    <filter>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>{int_name}</name>
+        </interface>
+      </interfaces>
+    </filter>
+    """
+    m = manager.connect(host = device["address"],
+                         port = device["netconf_port"],
+                         username = device["username"],
+                         password = device["password"],
+                         hostkey_verify = False)
+    ```
+
+1. Verify NETCONF connection is active
+
+    ```python
+    m.connected
+    ```
+
+1. Create Python dictionary with new Loopback Details
+
+    ```python
+    loopback = {"int_name": "Loopback102",
+                "description": "Demo interface by NETCONF",
+                "ip": "192.168.102.1",
+                "netmask": "255.255.255.0"}
+    ```
+
+1. Create NETCONF <config> template for an interface
+
+    ```python
+    config_data = """
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+          <interface>
+            <name>{int_name}</name>
+            <description>{description}</description>
+            <type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">
+              ianaift:softwareLoopback
+            </type>
+            <enabled>true</enabled>
+            <ipv4 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip">
+              <address>
+                <ip>{ip}</ip>
+                <netmask>{netmask}</netmask>
+              </address>
+            </ipv4>
+          </interface>
+      </interfaces>
+    </config>
+    """
+    ```
+
+1. Create desired NETCONF config payload 
+
+    ```python
+    config = config_data.format(**loopback)
+    ```
+
+1. Send <edit-config> operation.
+
+    ```python
+    r = m.edit_config(target = "running", config = config)
+    ```
+
+1. Print OK status
+    
+    ```python
+    print("NETCONF RPC OK: {}".format(r.ok))
+    ```
+
+1. Create a new NETCONF <filter> to check on new loopback interface. 
+
+    ```python
+    filter = interface_filter.format(int_name = "Loopback102")
+    ```
+
+1. Execute a NETCONF <get-config> using this filter. 
+    
+    ```python
+    r = m.get_config("running", filter)
+    ```
+
+1. Pretty print the raw XML to screen. 
+
+    ```python
+    xml_doc = minidom.parseString(r.xml)
+    print(xml_doc.toprettyxml(indent = "  "))
+    ```
 
 ### Delete Network Configuration Details with NETCONF - `netconf_example3.py`
+1. Continuing from previous exercise. If starting from new interpreter, execute these steps.
 
+    ```python
+    from ncclient import manager
+    from xml.dom import minidom
+    import xmltodict
+    import sys
+    sys.path.append("..") 
+    from device_info import vagrant_iosxe as device
+    interface_filter = """
+    <filter>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>{int_name}</name>
+        </interface>
+      </interfaces>
+    </filter>
+    """
+    loopback = {"int_name": "Loopback102",
+                "description": "Demo interface by NETCONF",
+                "ip": "192.168.102.1",
+                "netmask": "255.255.255.0"}
+    m = manager.connect(host = device["address"],
+                         port = device["netconf_port"],
+                         username = device["username"],
+                         password = device["password"],
+                         hostkey_verify = False)
+    ```
+
+1. Verify NETCONF connection is active
+
+    ```python
+    m.connected
+    ```
+
+1. Create new config template to delete an interface
+
+    ```python
+    config_data = """
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+          <interface operation="delete">
+            <name>{int_name}</name>
+          </interface>
+      </interfaces>
+    </config>
+    """
+    ```
+
+1. Create desired NETCONF config payload and execute <edit-config> to delete the interface.
+
+    ```python
+    config = config_data.format(**loopback)
+    r = m.edit_config(target = "running", config = config)
+    ```
+
+1. Print OK status
+
+    ```python
+    print("NETCONF RPC OK: {}".format(r.ok))
+    ```
+
+1. Create a new NETCONF <filter> to check on new loopback interface. 
+
+    ```python
+    filter = interface_filter.format(int_name = "Loopback102")
+    ```
+
+1. Execute a NETCONF <get-config> using this filter. 
+    
+    ```python
+    r = m.get_config("running", filter)
+    ```
+
+1. Pretty print the raw XML to screen. 
+
+    ```python
+    xml_doc = minidom.parseString(r.xml)
+    print(xml_doc.toprettyxml(indent = "  "))
+    ```
+
+### End the NETCONF Connection 
+
+1. Send a <close-session> RPC request to disconnect the connection. 
+
+    ```python
+    m.close_session()
+    m.connected
+    ```
+
+1. End the Python interpreter. 
+
+    ```python
+    exit()
+    ```
 
 ## CLI - netmiko 
 ### Retrieve Network Configuration Details with CLI - `netmiko_example1.py`
