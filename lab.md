@@ -992,14 +992,224 @@ Each exercise also includes a Python script file that can be executed directly.
     ```
 
 ## CLI - netmiko 
-### Retrieve Network Configuration Details with CLI - `netmiko_example1.py`
+1. From the root of the `python_networking` repository, change into the exercise directory.  
 
+    ```bash
+    cd device_apis/cli
+    ```
+
+1. Start an interactive Python interpreter.  Example below:
+
+    ```python
+    # ipython
+    
+    Python 3.6.5 (default, Apr 10 2018, 17:08:37)
+    Type 'copyright', 'credits' or 'license' for more information
+    IPython 6.5.0 -- An enhanced Interactive Python. Type '?' for help.
+    
+    In [1]:
+    ```
+
+### Retrieve Network Configuration Details with CLI - `netmiko_example1.py`
+1. Import libraries
+
+    ```python
+    from netmiko import ConnectHandler
+    import re
+    import sys
+    ```
+
+1. Add parent directory to path to allow importing common vars
+
+    ```python
+    sys.path.append("..") 
+    from device_info import vagrant_iosxe as device
+    ```
+
+1. Set device_type for netmiko
+
+    ```python
+    device["device_type"] = "cisco_ios"
+    ```
+
+1. Create a CLI command template
+
+    ```python
+    show_interface_config_temp = "show running-config interface {}"
+    ```
+
+1. Open CLI connection to device. 
+    * *Note: Normally you'd use a with block to open connection to device. This avoids needing to manually `m.close_session()` at the end of a script, but for interactive use, this format is chosen.*
+
+    ```python
+    ch = ConnectHandler(ip = device["address"],
+                        port = device["ssh_port"],
+                        username = device["username"],
+                        password = device["password"],
+                        device_type = device["device_type"])
+    ```
+
+1. Create desired CLI command
+
+    ```python
+    command = show_interface_config_temp.format("GigabitEthernet2")
+    ```
+
+1. Send command to device. 
+
+    ```python
+    interface = ch.send_command(command)
+    ```
+
+1. Print the raw command output to the screen
+
+    ```python
+    print(interface)
+    ```
+
+1. Create regular expression searches to parse the output for desired interface details.
+
+    ```python
+    name = re.search(r'interface (.*)', interface).group(1)
+    description = re.search(r'description (.*)', interface).group(1)
+    ```
+
+1. Pull out the ip and mask for the interface. 
+
+    ```python
+    ip_info = re.search(r'ip address (.*) (.*)', interface)
+    ip = ip_info.group(1)
+    netmask = ip_info.group(2)
+    ```
+
+1. Print the desired info to the screen
+
+    ```python
+    print("The interface {name} has ip address {ip}/{mask}".format(
+            name = name,
+            ip = ip,
+            mask = netmask,
+            )
+        )
+    ```
 
 ### Modify Network Configuration Details with CLI - `netmiko_example2.py`
+1. Continuing from previous exercise. If starting from new interpreter, execute these steps.
 
+    ```python
+    from netmiko import ConnectHandler
+    import re, sys
+    sys.path.append("..") 
+    from device_info import vagrant_iosxe as device
+    device["device_type"] = "cisco_ios"
+    show_interface_config_temp = "show running-config interface {}"
+    ch = ConnectHandler(ip = device["address"],
+                        port = device["ssh_port"],
+                        username = device["username"],
+                        password = device["password"],
+                        device_type = device["device_type"])
+    ```
+
+1. Create Python dictionary with new Loopback Details
+
+    ```python
+    loopback = {"int_name": "Loopback103",
+                "description": "Demo interface by CLI and netmiko",
+                "ip": "192.168.103.1",
+                "netmask": "255.255.255.0"}
+    ```
+
+1. Create a CLI configuration
+
+    ```python
+    interface_config = [
+        "interface {}".format(loopback["int_name"]),
+        "description {}".format(loopback["description"]),
+        "ip address {} {}".format(loopback["ip"], loopback["netmask"]),
+        "no shut"
+    ]
+    ```
+
+1. Send configuration to device
+
+    ```python
+    output = ch.send_config_set(interface_config)
+    ```
+
+1. Print the raw command output to the screen
+
+    ```python
+    print("The following configuration was sent: ")
+    print(output)
+    ```
+
+1. Create a CLI command to retrieve the new configuration.  
+
+    ```python
+    command = show_interface_config_temp.format("Loopback103")
+    interface = ch.send_command(command)
+    print(interface)
+    ```
 
 ### Delete Network Configuration Details with CLI - `netmiko_example3.py`
+1. Continuing from previous exercise. If starting from new interpreter, execute these steps.
 
+    ```python
+    from netmiko import ConnectHandler
+    import re, sys
+    sys.path.append("..") 
+    from device_info import vagrant_iosxe as device
+    device["device_type"] = "cisco_ios"
+    show_interface_config_temp = "show running-config interface {}"
+    ch = ConnectHandler(ip = device["address"],
+                        port = device["ssh_port"],
+                        username = device["username"],
+                        password = device["password"],
+                        device_type = device["device_type"])
+    ```
+
+1. Create a new CLI configuration to delete the interface. 
+
+    ```python
+    interface_config = [
+        "no interface {}".format(loopback["int_name"])
+    ]
+    ```
+
+1. Send configuration to device
+
+    ```python
+    output = ch.send_config_set(interface_config)
+    ```
+
+1. Print the raw command output to the screen
+
+    ```python
+    print("The following configuration was sent: ")
+    print(output)
+    ```
+
+1. Create a CLI command to verify configuration removed.
+
+    ```python
+    command = show_interface_config_temp.format("Loopback103")
+    interface = ch.send_command(command)
+    print(interface)
+    ```
+
+
+### End the CLI connection to the device
+1. Disconnect from the device.  
+
+    ```python
+    ch.disconnect()
+    ```
+
+1. End the Python interpreter. 
+
+    ```python
+    exit()
+    ```
 
 ## SNMP - PySNMP 
 
