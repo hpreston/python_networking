@@ -41,15 +41,15 @@ ios_xe1 = {
           }
 
 # Vagrant option - Uncomment the below if using Vagrant IOS XE Device
-# ios_xe1 = {
-#              "address": "127.0.0.1",
-#              "netconf_port": 2223,
-#              "restconf_port": 2225,
-#              "ssh_port": 2222,
-#              "snmp_port": 2227,
-#              "username": "vagrant",
-#              "password": "vagrant"
-#           }
+ios_xe1 = {
+             "address": "127.0.0.1",
+             "netconf_port": 2223,
+             "restconf_port": 2225,
+             "ssh_port": 2222,
+             "snmp_port": 2227,
+             "username": "vagrant",
+             "password": "vagrant"
+          }
 
 
 # DevNet Always-On Sandbox APIC-EM
