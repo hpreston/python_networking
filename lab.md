@@ -476,7 +476,7 @@ Each exercise also includes a Python script file that can be executed directly.
 
     ```python
     sys.path.append("..") 
-    from device_info import ios_xe1 as device
+    from device_info import vagrant_iosxe as device
     ```
 
 1. Disable Self-Signed Cert warning for demo
@@ -539,7 +539,7 @@ Each exercise also includes a Python script file that can be executed directly.
     ```python
     import requests, urllib3, sys
     sys.path.append("..") 
-    from device_info import ios_xe1 as device
+    from device_info import vagrant_iosxe as device
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     restconf_headers = {"Accept": "application/yang-data+json"}
     restconf_base = "https://{ip}:{port}/restconf/data"
@@ -630,7 +630,7 @@ Each exercise also includes a Python script file that can be executed directly.
     ```python
     import requests, urllib3, sys
     sys.path.append("..") 
-    from device_info import ios_xe1 as device
+    from device_info import vagrant_iosxe as device
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     restconf_headers = {"Accept": "application/yang-data+json"}
     restconf_base = "https://{ip}:{port}/restconf/data"
