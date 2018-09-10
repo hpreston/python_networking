@@ -13,6 +13,12 @@ Vagrant.configure("2") do |config|
 
     node.vm.network :forwarded_port, protocol: 'udp', guest: 161, host: 2227, id: 'snmp', auto_correct: true
 
+    # Vagrant 2.1.0 or higher
+    # node.trigger.after :up do |trigger|
+    #   trigger.info = "Running baseline script"
+    #   trigger.run = {path: "vagrant_device_setup.py"}
+    # end
+
   end
 
 end

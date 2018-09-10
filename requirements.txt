@@ -1,4 +1,6 @@
 ansible==2.6.1
+genie==3.0.0
+ipython==6.5.0
 napalm==2.3.1
 ncclient==0.6.0
 netmiko==2.2.2
