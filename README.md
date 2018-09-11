@@ -1,7 +1,7 @@
-# python_networking
+# Useful Python Libraries for Network Engineers
 Collection of scripts and examples of Python code, libraries, and utilities for working with Network Devices.  
 
-> This repo is an active work in progress.  
+> The code in this repository is used in a demonstrations, talks, and labs as part of [Cisco DevNet](https://developer.cisco.com) and specifically [NetDevOps Live!](https://developer.cisco.com/netdevops/live). 
 
 # Setting Up to Run Examples 
 ## Clone and Prep the Environment
