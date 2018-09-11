@@ -27,7 +27,6 @@ SOFTWARE.
 # Import libraries
 import requests, urllib3
 import sys
-import yaml
 
 # Add parent directory to path to allow importing common vars
 sys.path.append("..") # noqa
