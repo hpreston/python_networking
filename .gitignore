@@ -3,6 +3,8 @@ scratch*
 *.retry
 default_inventory.yaml
 .vagrant/
+setup/configs/*.xml
+
 
 
 # Byte-compiled / optimized / DLL files
