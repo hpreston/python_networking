@@ -26,7 +26,7 @@ SOFTWARE.
 from ncclient import manager
 from xml.dom import minidom
 import xmltodict
-from device_apis.device_info import ios_xe1 as device # noqa
+from device_apis.device_info import vagrant_iosxe as device # noqa
 
 # Open and read in configuration template
 with open("vagrant_device_config.xml") as f:
