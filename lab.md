@@ -1239,7 +1239,7 @@ In the following exercises, you will get a brief introduction to pyATS to connec
     from genie.conf import Genie
     from ats.topology import loader
     from genie.abstract import Lookup
-    from genie.libs import ops 
+    from genie.libs import ops # noqa
     ```
 
 1. Read and process the testbed (inventory) file
