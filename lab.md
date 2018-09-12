@@ -1,9 +1,20 @@
 # Hands On - Useful Python Libraries for Network Engineers
 
 * [Setup and Preparation](#setup-and-preparation)
+    * [Devnet Sandbox](#devnet-sandbox)
 * [Libraries to Work with Data](#libraries-to-work-with-data)
+    * [XML with xmltodict](#xml-with-xmltodict)
+    * [JSON with json](#json-with-json)
+    * [YAML with PyYAML](#yaml-with-pyyaml)
+    * [CSV with csv](#csv-with-csv)
+    * [YANG with pyang](#yang-with-pyang)
 * [Libraries to Work with APIs](#libraries-to-work-with-apis)
+    * [rest with requests](#rest-with-requests)
+    * [NETCONF with ncclient](#netconf-with-ncclient)
+    * [CLI with netmiko](#cli-with-netmiko)
 * [Other Cool Python Stuff](#other-cool-python-stuff)
+    * [Introduction to pyATS](#introduction-to-pyats)
+
 
 # Setup and Preparation
 ## Devnet Sandbox
@@ -62,7 +73,7 @@ Exercises in this section are intended to be executed from an interactive Python
 
 Other options could be just `python` or `idle`.
 
-## XML - xmltodict 
+## XML with xmltodict 
 1. From the root of the `python_networking` repository, change into the exercise directory.  
 
     ```bash
@@ -143,7 +154,7 @@ Other options could be just `python` or `idle`.
     exit()
     ```
 
-## JSON - json 
+## JSON with json 
 1. From the root of the `python_networking` repository, change into the exercise directory.  
 
     ```python
@@ -224,7 +235,7 @@ Other options could be just `python` or `idle`.
     exit()
     ```
 
-## YAML - PyYAML
+## YAML with PyYAML
 1. From the root of the `python_networking` repository, change into the exercise directory.  
 
     ```python
@@ -305,7 +316,7 @@ Other options could be just `python` or `idle`.
     exit()
     ```
 
-## CSV - csv 
+## CSV with csv 
 1. From the root of the `python_networking` repository, change into the exercise directory.  
 
     ```bash
@@ -380,7 +391,7 @@ Other options could be just `python` or `idle`.
     exit()
     ```
 
-## YANG - pyang 
+## YANG with pyang 
 1. From the root of the `python_networking` repository, change into the exercise directory.  
 
     ```bash
@@ -445,7 +456,7 @@ Other options could be just `python` or `idle`.
 
 Each exercise also includes a Python script file that can be executed directly.  
 
-## rest - requests 
+## rest with requests 
 1. From the root of the `python_networking` repository, change into the exercise directory.  
 
     ```bash
@@ -464,7 +475,7 @@ Each exercise also includes a Python script file that can be executed directly.
     In [1]:
     ```
 
-### Retrieve Network Configuration Details with RESTCONF - `restconf_example1.py`
+### Retrieve Network Configuration Details with RESTCONF with `restconf_example1.py`
 1. Import libraries
 
     ```python
@@ -533,7 +544,7 @@ Each exercise also includes a Python script file that can be executed directly.
         print("No interface {} found.".format("GigabitEthernet2"))
     ```
 
-### Modify Network Configuration Details with RESTCONF - `restconf_example2.py`
+### Modify Network Configuration Details with RESTCONF with `restconf_example2.py`
 1. Continuing from previous exercise.  If starting from new interpreter, execute these steps. 
 
     ```python
@@ -624,7 +635,7 @@ Each exercise also includes a Python script file that can be executed directly.
     print(r.text)
     ```
 
-### Delete Network Configuration Details with RESTCONF - `restconf_example3.py`
+### Delete Network Configuration Details with RESTCONF with `restconf_example3.py`
 1. Continuing from previous exercise.  If starting from new interpreter, execute these steps. 
 
     ```python
@@ -672,7 +683,7 @@ Each exercise also includes a Python script file that can be executed directly.
     ```
 
 
-## NETCONF - ncclient
+## NETCONF with ncclient
 
 1. From the root of the `python_networking` repository, change into the exercise directory.  
 
@@ -692,7 +703,7 @@ Each exercise also includes a Python script file that can be executed directly.
     In [1]:
     ```
 
-### Retrieve Network Configuration Details with NETCONF - `netconf_example1.py`
+### Retrieve Network Configuration Details with NETCONF with `netconf_example1.py`
 
 1. Import libraries
 
@@ -791,7 +802,7 @@ Each exercise also includes a Python script file that can be executed directly.
     ```
 
 
-### Modify Network Configuration Details with NETCONF - `netconf_example2.py`
+### Modify Network Configuration Details with NETCONF with `netconf_example2.py`
 1. Continuing from previous exercise. If starting from new interpreter, execute these steps.
 
     ```python
@@ -894,7 +905,7 @@ Each exercise also includes a Python script file that can be executed directly.
     print(xml_doc.toprettyxml(indent = "  "))
     ```
 
-### Delete Network Configuration Details with NETCONF - `netconf_example3.py`
+### Delete Network Configuration Details with NETCONF with `netconf_example3.py`
 1. Continuing from previous exercise. If starting from new interpreter, execute these steps.
 
     ```python
@@ -991,7 +1002,7 @@ Each exercise also includes a Python script file that can be executed directly.
     exit()
     ```
 
-## CLI - netmiko 
+## CLI with netmiko 
 1. From the root of the `python_networking` repository, change into the exercise directory.  
 
     ```bash
@@ -1010,7 +1021,7 @@ Each exercise also includes a Python script file that can be executed directly.
     In [1]:
     ```
 
-### Retrieve Network Configuration Details with CLI - `netmiko_example1.py`
+### Retrieve Network Configuration Details with CLI with `netmiko_example1.py`
 1. Import libraries
 
     ```python
@@ -1093,7 +1104,7 @@ Each exercise also includes a Python script file that can be executed directly.
         )
     ```
 
-### Modify Network Configuration Details with CLI - `netmiko_example2.py`
+### Modify Network Configuration Details with CLI with `netmiko_example2.py`
 1. Continuing from previous exercise. If starting from new interpreter, execute these steps.
 
     ```python
@@ -1151,7 +1162,7 @@ Each exercise also includes a Python script file that can be executed directly.
     print(interface)
     ```
 
-### Delete Network Configuration Details with CLI - `netmiko_example3.py`
+### Delete Network Configuration Details with CLI with `netmiko_example3.py`
 1. Continuing from previous exercise. If starting from new interpreter, execute these steps.
 
     ```python
@@ -1211,10 +1222,124 @@ Each exercise also includes a Python script file that can be executed directly.
     exit()
     ```
 
-## SNMP - PySNMP 
-
-
-
 # Other Cool Python Stuff 
 
+## Introduction to pyATS
+[pyATS](https://developer.cisco.com/site/pyats) is a network testing tool developed by Cisco and made available for free, with significant elements of the underlying code open source.  
 
+pyATS offers network developers the ability to profile the network state of hardware, interfaces, protocols, etc before, during and after changes to ensure the network is operating as designed and identify problems before the dreaded phone call.  To enable this level of robust testing, pyATS offers a standard way to communicate with network elements and standardize the data returned into native Python objects.  This core functionality opens up a lot of flexibility on how pyATS can be used by network developers.  
+
+In the following exercises, you will get a brief introduction to pyATS to connect and learn about device details.  
+
+### Connect and Interact with a Device
+
+1. Import in pyATS libraries and tools 
+
+    ```python
+    from genie.conf import Genie
+    from ats.topology import loader
+    from genie.abstract import Lookup
+    from genie.libs import ops 
+    ```
+
+1. Read and process the testbed (inventory) file
+
+    ```python
+    genie_testbed = Genie.init("./default_testbed.yaml")
+    ```
+
+1. Create a pyATS device object from testbed
+
+    ```python
+    vagrant_iosxe1 = genie_testbed.devices["vagrant-iosxe1"]
+    ```
+
+1. Connect to the device
+
+    ```python
+    vagrant_iosxe1.connect()
+    ```
+    
+    * pyATS establishes a connection to the device
+
+1. Create an abstract device to standardize Python API and code for platform
+
+    ```python
+    vagrant_iosxe1_abstract = Lookup.from_device(vagrant_iosxe1)
+    ```
+
+1. Using the absract device, learn about the Interfaces on the end device
+
+    ```python
+    vagrant_iosxe1_interfaces = vagrant_iosxe1_abstract.ops.interface.interface.Interface(vagrant_iosxe1)
+    vagrant_iosxe1_interfaces.learn()
+    ```
+
+1. Print out the interface details that were learned 
+
+    ```python
+    vagrant_iosxe1_interfaces.info
+    ```
+
+1. Display a single interface from the device 
+
+    ```python
+    vagrant_iosxe1_interfaces.info["GigabitEthernet1"]
+    ```
+
+1. Print the mac address for the interface 
+
+    ```python
+    vagrant_iosxe1_interfaces.info["GigabitEthernet1"]["mac_address"]
+    ```
+
+1. Notice that there was no parsing of command line output needed to access this data 
+
+1. Execute a command on the device and print the output 
+
+    ```python
+    print(vagrant_iosxe1.execute("show version"))
+    ```
+
+1. Or store the output into a variable 
+
+    ```python
+    version = vagrant_iosxe1.execute("show version")
+    ```
+
+1. Send a configuration command to the 
+
+    ```python
+    vagrant_iosxe1.configure("ntp server 10.10.10.10")
+    ```
+
+1. Create a configuration command list and send to the device 
+
+    ```python
+    config_loopback = [
+                        "interface Loopback201", 
+                        "description Configured by pyATS", 
+                        "ip address 172.16.201.1 255.255.255.0", 
+                        "no shut"
+                      ]
+    vagrant_iosxe1.configure(config_loopback)
+    ```
+
+1. Re-learn the interfaces
+
+    ```python
+    vagrant_iosxe1_interfaces = vagrant_iosxe1_abstract.ops.interface.interface.Interface(vagrant_iosxe1)
+    vagrant_iosxe1_interfaces.learn()
+    ```
+
+1. Get details about new interface 
+
+    ```python
+    vagrant_iosxe1_interfaces.info["Loopback201"]
+    ```
+
+1. Disconnect from the devices
+
+    ```python
+    vagrant_iosxe1.disconnect()
+    ```
