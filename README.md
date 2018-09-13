@@ -1,9 +1,12 @@
 # Useful Python Libraries for Network Engineers
 Collection of scripts and examples of Python code, libraries, and utilities for working with Network Devices.  
 
-> The code in this repository is used in a demonstrations, talks, and labs as part of [Cisco DevNet](https://developer.cisco.com) and specifically [NetDevOps Live!](https://developer.cisco.com/netdevops/live). 
+> The code in this repository is used in a demonstrations, talks, and labs as part of [Cisco DevNet](https://developer.cisco.com) and specifically [NetDevOps Live!](https://developer.cisco.com/netdevops/live).
 
-# Setting Up to Run Examples 
+# Hands On Lab
+Included in this repo is a short hands on lab guide that walks through many of the libraries discussed and used through the examples.  You can [view the lab guide here](lab.md).  
+
+# Setting Up to Run Examples
 ## Clone and Prep the Environment
 1. Clone the code repo
 
@@ -19,7 +22,7 @@ Collection of scripts and examples of Python code, libraries, and utilities for 
     source venv/bin/activate
     pip install -r requirements.txt
     ```
-    
+
     * *Note: If on Linux, you will need to install the Python3.6 development files.  On CentOS this is done with `yum install -y python36u-devel`*
 
 ## Infrastructure Resources
