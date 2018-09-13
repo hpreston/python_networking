@@ -39,10 +39,10 @@ The configuration management scripts in this repository are written to target a 
 
 1. After connecting to the Sandbox with VPN, start the development network.  This single line command will start the simulation, wait to completely start, and then lay down an initial configuration with Ansible.  
 
-```bash
-virl up --provision \
-  && virl generate ansible -o setup/default_inventory.yaml \
-  && cd setup \
-  && ansible-playbook network_deploy.yaml \
-  && cd ../
-```
+    ```bash
+    virl up --provision \
+      && virl generate ansible -o setup/default_inventory.yaml \
+      && cd setup \
+      && ansible-playbook network_deploy.yaml \
+      && cd ../
+    ```
