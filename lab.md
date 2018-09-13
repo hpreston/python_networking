@@ -232,7 +232,7 @@ Other options could be just `python` or `idle`.
 1. Check that the IP address has been changed in the dictionary
 
    ```python
-   pprint(xml_dict)
+   pprint(json_dict)
    ```
 
 1. Revert to the json string version of the dictionary
@@ -319,7 +319,7 @@ Other options could be just `python` or `idle`.
 1. Check that the IP address has been changed in the dictionary
 
    ```python
-   pprint(xml_dict)
+   pprint(yaml_dict)
    ```
 
 1. Revert to the yaml string version of the dictionary
