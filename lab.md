@@ -1360,7 +1360,7 @@ In the following exercises, you will get a brief introduction to pyATS to connec
     version = vagrant_iosxe1.execute("show version")
     ```
 
-1. Send a configuration command to the 
+1. Send a configuration command to the device
 
     ```python
     vagrant_iosxe1.configure("ntp server 10.10.10.10")
