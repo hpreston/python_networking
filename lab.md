@@ -69,7 +69,7 @@ If you are doing this lab on your own, you'll need to reserve an instance of thi
 # Libraries to Work with Data
 Exercises in this section are intended to be executed from an interactive Python interpreter.  
 
-[iPython](https://ipython.org) has been installed as part of the requirements.txt installation and is one option.  You can start an iPython window by simply typing `ipython`.  
+[iPython](https://ipython.org) has been installed as part of the requirements.txt installation and is one option.  You can start an iPython window by simply typing `ipython`.  For each step in the list below, type the specified command (or commands) and then press enter until the iPython prompt goes to the next step, and/or shows the expected output (ie. print or pprint commands).
 
 Other options could be just `python` or `idle`.
 
@@ -141,6 +141,12 @@ Other options could be just `python` or `idle`.
     ```python
     xml_dict["interface"]["ipv4"]["address"]["ip"] = "192.168.0.2"
     ```
+
+1. Check that the IP address has been changed in the dictionary
+
+   ```python
+   pprint(xml_dict)
+   ```
 
 1. Revert to the XML string version of the dictionary
 
@@ -223,6 +229,12 @@ Other options could be just `python` or `idle`.
     json_dict["interface"]["ipv4"]["address"][0]["ip"] = "192.168.0.2"
     ```
 
+1. Check that the IP address has been changed in the dictionary
+
+   ```python
+   pprint(xml_dict)
+   ```
+
 1. Revert to the json string version of the dictionary
 
     ```python
@@ -303,6 +315,12 @@ Other options could be just `python` or `idle`.
     ```python
     yaml_dict["interface"]["ipv4"]["address"][0]["ip"] = "192.168.0.2"
     ```
+
+1. Check that the IP address has been changed in the dictionary
+
+   ```python
+   pprint(xml_dict)
+   ```
 
 1. Revert to the yaml string version of the dictionary
 
@@ -417,7 +435,7 @@ Other options could be just `python` or `idle`.
     pyang -f sample-xml-skeleton ietf-interfaces.yang
     ```
 
-1. Create an HTTP/JS view of the YANG Model
+1. Create an HTTP/JS view of the YANG Model (no output expected in the CLI)
 
     ```bash
     pyang -f jstree -o ietf-interfaces.html \
@@ -513,6 +531,12 @@ Each exercise also includes a Python script file that can be executed directly.
                               )
     ```
 
+1. Check the complete URL you just composed
+
+   ```python
+   print(url)
+   ```
+
 1. Send RESTCONF request to core1 for GigE2 Config
 
     ```python
@@ -602,6 +626,12 @@ Each exercise also includes a Python script file that can be executed directly.
                               )
     ```
 
+1. Check the complete URL you just composed
+
+   ```python
+   print(url)
+   ```
+
 1. Send RESTCONF request to device
 
     ```python
@@ -612,13 +642,13 @@ Each exercise also includes a Python script file that can be executed directly.
             verify=False)
     ```
 
-1. Check Status Code
+1. Check Status Code (expected `201`)
     
     ```python
     print("Request Status Code: {}".format(r.status_code))
     ```
 
-1. Query for details on the new interface. 
+1. Query for details on the new interface you just created
 
     ```python
     # Create URL and send RESTCONF request to core1 for GigE2 Config
@@ -661,13 +691,13 @@ Each exercise also includes a Python script file that can be executed directly.
             verify=False)
     ```
 
-1. Check Status Code. Should be `204`
+1. Check Status Code (expected `204`)
 
     ```python
     print("Request Status Code: {}".format(r.status_code))
     ``` 
 
-1. Query for details on the new interface. 
+1. Query for details on the new interface (no output expected, as you just deleted it)
 
     ```python
     r = requests.get(url,
@@ -676,7 +706,7 @@ Each exercise also includes a Python script file that can be executed directly.
             verify=False)
     ```
     
-1. Check status code.  Should be `404`
+1. Check status code (expected `404`)
 
     ```python
     print(r.status_code)
@@ -735,7 +765,7 @@ Each exercise also includes a Python script file that can be executed directly.
     """
     ```
 
-1. Open NETCONF connection to device. 
+1. Open NETCONF connection to device
     * *Note: Normally you'd use a `with` block to open connection to device. This avoids needing to manually `m.close_session()` at the end of a script, but for interactive use, this format is chosen.*
 
     ```python
@@ -746,19 +776,19 @@ Each exercise also includes a Python script file that can be executed directly.
                          hostkey_verify = False)
     ```
 
-1. Verify NETCONF connection is active. 
+1. Verify NETCONF connection is active (expected output `true`)
 
     ```python
     m.connected
     ```
 
-1. Create desired NETCONF filter for a particular interface.
+1. Create desired NETCONF filter for a particular interface
     
     ```python
     filter = interface_filter.format(int_name = "GigabitEthernet2")
     ```
 
-1. Execute a NETCONF <get-config> using the filter.
+1. Execute a NETCONF <get-config> using the filter
     
     ```python
     r = m.get_config("running", filter)
@@ -874,31 +904,31 @@ Each exercise also includes a Python script file that can be executed directly.
     config = config_data.format(**loopback)
     ```
 
-1. Send <edit-config> operation.
+1. Send <edit-config> operation
 
     ```python
     r = m.edit_config(target = "running", config = config)
     ```
 
-1. Print OK status
+1. Print OK status (expected output `true`)
     
     ```python
     print("NETCONF RPC OK: {}".format(r.ok))
     ```
 
-1. Create a new NETCONF <filter> to check on new loopback interface. 
+1. Create a new NETCONF <filter> to check on new loopback interface
 
     ```python
     filter = interface_filter.format(int_name = "Loopback102")
     ```
 
-1. Execute a NETCONF <get-config> using this filter. 
+1. Execute a NETCONF <get-config> using this filter
     
     ```python
     r = m.get_config("running", filter)
     ```
 
-1. Pretty print the raw XML to screen. 
+1. Pretty print the raw XML to screen
 
     ```python
     xml_doc = minidom.parseString(r.xml)
@@ -955,32 +985,32 @@ Each exercise also includes a Python script file that can be executed directly.
     """
     ```
 
-1. Create desired NETCONF config payload and execute <edit-config> to delete the interface.
+1. Create desired NETCONF config payload and execute <edit-config> to delete the interface
 
     ```python
     config = config_data.format(**loopback)
     r = m.edit_config(target = "running", config = config)
     ```
 
-1. Print OK status
+1. Print OK status (expected output `true`)
 
     ```python
     print("NETCONF RPC OK: {}".format(r.ok))
     ```
 
-1. Create a new NETCONF <filter> to check on new loopback interface. 
+1. Create a new NETCONF <filter> to check on new loopback interface
 
     ```python
     filter = interface_filter.format(int_name = "Loopback102")
     ```
 
-1. Execute a NETCONF <get-config> using this filter. 
+1. Execute a NETCONF <get-config> using this filter
     
     ```python
     r = m.get_config("running", filter)
     ```
 
-1. Pretty print the raw XML to screen. 
+1. Pretty print the raw XML to screen (expected output will not include the loopback interface, as you just deleted it)
 
     ```python
     xml_doc = minidom.parseString(r.xml)
@@ -1066,7 +1096,13 @@ Each exercise also includes a Python script file that can be executed directly.
     command = show_interface_config_temp.format("GigabitEthernet2")
     ```
 
-1. Send command to device. 
+1. Verify the command has been created correctly
+
+   ```python
+   print(command)
+   ```
+
+1. Send command to device
 
     ```python
     interface = ch.send_command(command)
@@ -1078,14 +1114,14 @@ Each exercise also includes a Python script file that can be executed directly.
     print(interface)
     ```
 
-1. Create regular expression searches to parse the output for desired interface details.
+1. Create regular expression searches to parse the output for desired interface details
 
     ```python
     name = re.search(r'interface (.*)', interface).group(1)
     description = re.search(r'description (.*)', interface).group(1)
     ```
 
-1. Pull out the ip and mask for the interface. 
+1. Pull out the ip and mask for the interface
 
     ```python
     ip_info = re.search(r'ip address (.*) (.*)', interface)
@@ -1207,7 +1243,7 @@ Each exercise also includes a Python script file that can be executed directly.
     interface = ch.send_command(command)
     print(interface)
     ```
-
+   *Note: attempting to view the configuration of a non-existing interface will generate a CLI error. This output is expected, and one of the reasons APIs like NETCONF or RESTCONF are better suited to programmatic interactions.*
 
 ### End the CLI connection to the device
 1. Disconnect from the device.  
@@ -1227,11 +1263,29 @@ Each exercise also includes a Python script file that can be executed directly.
 ## Introduction to pyATS
 [pyATS](https://developer.cisco.com/site/pyats) is a network testing tool developed by Cisco and made available for free, with significant elements of the underlying code open source.  
 
-pyATS offers network developers the ability to profile the network state of hardware, interfaces, protocols, etc before, during and after changes to ensure the network is operating as designed and identify problems before the dreaded phone call.  To enable this level of robust testing, pyATS offers a standard way to communicate with network elements and standardize the data returned into native Python objects.  This core functionality opens up a lot of flexibility on how pyATS can be used by network developers.  
+pyATS offers network developers the ability to profile the network state of hardware, interfaces, protocols, etc... before, during and after changes, to ensure the network is operating as designed, and identify problems before the dreaded phone call.  To enable this level of robust testing, pyATS offers a standard way to communicate with network elements and standardize the data returned into native Python objects.  This core functionality opens up a lot of flexibility on how pyATS can be used by network developers.  
 
 In the following exercises, you will get a brief introduction to pyATS to connect and learn about device details.  
 
 ### Connect and Interact with a Device
+
+1. From the root of the `python_networking` repository, change into the exercise directory.  
+
+    ```bash
+    cd network_testing/pyats
+    ```
+
+1. Start an interactive Python interpreter.  Example below:
+
+    ```python
+    # ipython
+    
+    Python 3.6.5 (default, Apr 10 2018, 17:08:37)
+    Type 'copyright', 'credits' or 'license' for more information
+    IPython 6.5.0 -- An enhanced Interactive Python. Type '?' for help.
+    
+    In [1]:
+    ```
 
 1. Import in pyATS libraries and tools 
 
@@ -1268,7 +1322,7 @@ In the following exercises, you will get a brief introduction to pyATS to connec
     vagrant_iosxe1_abstract = Lookup.from_device(vagrant_iosxe1)
     ```
 
-1. Using the absract device, learn about the Interfaces on the end device
+1. Using the abstract device, learn about the Interfaces on the end device
 
     ```python
     vagrant_iosxe1_interfaces = vagrant_iosxe1_abstract.ops.interface.interface.Interface(vagrant_iosxe1)
@@ -1307,7 +1361,7 @@ In the following exercises, you will get a brief introduction to pyATS to connec
     version = vagrant_iosxe1.execute("show version")
     ```
 
-1. Send a configuration command to the 
+1. Send a configuration command to the device
 
     ```python
     vagrant_iosxe1.configure("ntp server 10.10.10.10")
