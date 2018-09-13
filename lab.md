@@ -1241,8 +1241,9 @@ Each exercise also includes a Python script file that can be executed directly.
     ```python
     command = show_interface_config_temp.format("Loopback103")
     interface = ch.send_command(command)
+    print(interface)
     ```
-
+   *Note: attempting to view the configuration of a non-existing interface will generate a CLI error. This output is expected, and one of the reasons APIs like NETCONF or RESTCONF are better suited to programmatic interactions.*
 
 ### End the CLI connection to the device
 1. Disconnect from the device.  
