@@ -18,12 +18,23 @@ Included in this repo is a short hands on lab guide that walks through many of t
 1. Setup Python Virtual Environment.  
 
     ```bash
+    # MacOS or Linux
     python3.6 -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
     ```
 
     * *Note: If on Linux, you will need to install the Python3.6 development files.  On CentOS this is done with `yum install -y python36u-devel`*
+
+    ```bash
+    # Windows - recommendation to use git-bash terminal
+    py -3 -m venv venv
+    source venv/Scripts/activate
+    pip install -r requirements-win.txt
+    ```
+
+    * *Note: Creation and activation of a venv in Windows is slightly different.  Also Ansible and pyATS aren't currently supported on Windows so the `requirements-win.txt` doesn't contain those libraries.*
+
 
 ## Infrastructure Resources
 The example scripts for `data_manipulation` require nothing other than the files in this repository and the Python libraries installed with `pip install` above.  
