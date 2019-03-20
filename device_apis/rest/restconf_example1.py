@@ -43,14 +43,17 @@ interface_url = restconf_base + "/ietf-interfaces:interfaces/interface={int_name
 # Create URL and send RESTCONF request to core1 for GigE2 Config
 url = interface_url.format(ip = device["address"],
                            port = device["restconf_port"],
-                           int_name = "GigabitEthernet2"
+                           int_name = "GigabitEthernet1"
                           )
+print("URL: {}\n".format(url))
+
 r = requests.get(url,
         headers = restconf_headers,
         auth=(device["username"], device["password"]),
         verify=False)
 
 # Print returned data
+print("GET DATA:")
 print(r.text)
 
 if r.status_code == 200:
@@ -63,4 +66,4 @@ if r.status_code == 200:
             )
         )
 else:
-    print("No interface {} found.".format("GigabitEthernet2"))
+    print("No interface {} found.".format("GigabitEthernet1"))

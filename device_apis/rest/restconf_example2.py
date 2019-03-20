@@ -69,6 +69,8 @@ url = interface_url.format(ip = device["address"],
                            port = device["restconf_port"],
                            int_name = loopback["name"]
                           )
+print("URL: {}\n".format(url))
+
 r = requests.put(url,
         headers = restconf_headers,
         auth=(device["username"], device["password"]),
@@ -76,4 +78,4 @@ r = requests.put(url,
         verify=False)
 
 # Print returned data
-print("Request Status Code: {}".format(r.status_code))
+print("PUT Request Status Code: {}".format(r.status_code))

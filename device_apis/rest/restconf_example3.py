@@ -45,14 +45,15 @@ url = interface_url.format(ip = device["address"],
                            port = device["restconf_port"],
                            int_name = "Loopback101"
                           )
+print("URL: {}\n".format(url))
+
 r = requests.delete(url,
         headers = restconf_headers,
         auth=(device["username"], device["password"]),
         verify=False)
 
 # Print returned data
-print(r.text)
-print("Request Status Code: {}".format(r.status_code))
+print("DELETE Request Status Code: {}".format(r.status_code))
 
 # # Process JSON data into Python Dictionary and use
 # interface = r.json()["ietf-interfaces:interface"]

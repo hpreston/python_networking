@@ -46,12 +46,15 @@ url = interface_url.format(ip = device["address"],
                            port = device["restconf_port"],
                            int_name = "Loopback101"
                           )
+print("URL: {}\n".format(url))
+
 r = requests.get(url,
         headers = restconf_headers,
         auth=(device["username"], device["password"]),
         verify=False)
 
 # Print returned data
+print("GET DATA:")
 print(r.text)
 
 if r.status_code == 200:
