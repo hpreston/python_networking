@@ -32,7 +32,9 @@ import sys
 
 # Add parent directory to path to allow importing common vars
 sys.path.append("..") # noqa
+# from device_info import ios_xe1 as device # noqa
 from device_info import ios_xe1 as device # noqa
+
 
 # Create filter template for an interface
 interface_filter = """
@@ -53,7 +55,7 @@ with manager.connect(host = device["address"],
                      hostkey_verify = False) as m:
 
     # Create desired NETCONF filter and <get-config>
-    filter = interface_filter.format(int_name = "GigabitEthernet2")
+    filter = interface_filter.format(int_name = "GigabitEthernet1")
     r = m.get_config("running", filter)
 
     # Pretty print raw xml to screen
@@ -74,4 +76,4 @@ with manager.connect(host = device["address"],
                 )
             )
     else:
-        print("No interface {} found".format("GigabitEthernet2"))
+        print("No interface {} found".format("GigabitEthernet1"))
