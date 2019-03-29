@@ -11,18 +11,15 @@ requests.packages.urllib3.disable_warnings(
 # DevNet Always-On Sandbox DNA Center
 # https://devnetsandbox.cisco.com/RM/Diagram/Index/471eb739-323e-4805-b2a6-d0ec813dc8fc?diagramType=Topology
 dnac = {
-             "host": "sandboxdnac2.cisco.com",
-             "username": "devnetuser",
-             "password": "Cisco123!",
-             "port": 443
-         }
+    "host": "sandboxdnac2.cisco.com",
+    "username": "devnetuser",
+    "password": "Cisco123!",
+    "port": 443,
+}
 
 # Headers for DNAC
-headers = {
-              'content-type': "application/json",
-              'x-auth-token': ""
-          }
-         
+headers = {"content-type": "application/json", "x-auth-token": ""}
+
 
 def dnac_login(dnac, port, username, password):
     """
@@ -31,9 +28,9 @@ def dnac_login(dnac, port, username, password):
     url = "https://{}:{}/dna/system/api/v1/auth/token".format(dnac, port)
 
     # Make Login request and return the response body
-    response = requests.request("POST", url,
-                                auth = (username, password),
-                                headers=headers, verify=False)
+    response = requests.request(
+        "POST", url, auth=(username, password), headers=headers, verify=False
+    )
     return response.json()["Token"]
 
 
@@ -52,6 +49,7 @@ def host_list(dnac, ticket, ip=None):
     # Make API request and return the response body
     response = requests.request("GET", url, headers=headers, verify=False)
     return response.json()["response"]
+
 
 def print_host_details(host):
     """
@@ -81,11 +79,19 @@ def print_host_details(host):
     # Print Standard Details
     print("Host Name: {}".format(host["hostName"]))
     print("Network Type: {}".format(host["hostType"]))
-    print("Connected Network Device: {}".format(host["connectedNetworkDeviceIpAddress"]))  # noqa: E501
+    print(
+        "Connected Network Device: {}".format(
+            host["connectedNetworkDeviceIpAddress"]
+        )
+    )  # noqa: E501
 
     # Print Wired/Wireless Details
     if host["hostType"] == "wired":
-        print("Connected Interface Name: {}".format(host["connectedInterfaceName"]))  # noqa: E501
+        print(
+            "Connected Interface Name: {}".format(
+                host["connectedInterfaceName"]
+            )
+        )  # noqa: E501
     if host["hostType"] == "wireless":
         print("Connected AP Name: {}".format(host["connectedAPName"]))
 
@@ -98,15 +104,17 @@ def print_host_details(host):
     # Blank line at the end
     print("")
 
+
 # Entry point for program
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Setup Arg Parse for Command Line parameters
     import argparse
+
     parser = argparse.ArgumentParser()
 
     # Command Line Parameters for Source and Destination IP
-    parser.add_argument("source_ip", help = "Source IP Address")
-    parser.add_argument("destination_ip", help = "Destination IP Address")
+    parser.add_argument("source_ip", help="Source IP Address")
+    parser.add_argument("destination_ip", help="Destination IP Address")
     args = parser.parse_args()
 
     # Get Source and Destination IPs from Command Line
@@ -120,13 +128,13 @@ if __name__ == '__main__':
     print("")
 
     # Log into the dnac Controller to get Ticket
-    token = dnac_login(dnac["host"], dnac["port"], dnac["username"], dnac["password"])
+    token = dnac_login(
+        dnac["host"], dnac["port"], dnac["username"], dnac["password"]
+    )
 
     # Retrieve Host Details from dnac
-    source_host = host_list(dnac["host"], token,
-                            ip=source_ip)
-    destination_host = host_list(dnac["host"], token,
-                                 ip=destination_ip)
+    source_host = host_list(dnac["host"], token, ip=source_ip)
+    destination_host = host_list(dnac["host"], token, ip=destination_ip)
 
     # Print Out Host details
     print("Source Host Details:")

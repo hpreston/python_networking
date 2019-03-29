@@ -1,4 +1,3 @@
-
 import requests
 
 # Diable InsecureRequestWarning

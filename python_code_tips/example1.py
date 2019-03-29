@@ -6,11 +6,13 @@ Copyright (c) 2018 Cisco and/or its affiliates.
 
 import os
 
+
 def say_hello(name):
     """Function that will say hello to someone.
     """
     # Print out a hello message to the name given
-    print("Hello there {name}. It's great to see you.".format(name = name))
+    print("Hello there {name}. It's great to see you.".format(name=name))
+
 
 def script_details():
     """Function that reports by printing to screen some details about the
@@ -27,6 +29,7 @@ def script_details():
     print("The user id is {}".format(user_id))
     print("The user is a member of the following groups:")
     print(",".join(str(g) for g in group_list))
+
 
 if __name__ == "__main__":
     # If executed as a script, run this block.

@@ -8,10 +8,11 @@ requests.packages.urllib3.disable_warnings(
     requests.packages.urllib3.exceptions.InsecureRequestWarning
 )
 
+
 class DNAC(object):
     """A simple object for interacting with Cisco DNA Center"""
 
-    def __init__(self, address, username, password, port = 443):
+    def __init__(self, address, username, password, port=443):
         """Setup a new DNAC object given address and credentials"""
         self.address = address
         self.username = username
@@ -25,14 +26,19 @@ class DNAC(object):
         """
         Use the REST API to Log into an DNA Center and retrieve ticket
         """
-        url = "https://{}:{}/dna/system/api/v1/auth/token".format(self.address, self.port)
+        url = "https://{}:{}/dna/system/api/v1/auth/token".format(
+            self.address, self.port
+        )
 
         # Make Login request and return the response body
         response = requests.request(
-            "POST", url, auth=(self.username, self.password), headers=self.headers, verify=False
+            "POST",
+            url,
+            auth=(self.username, self.password),
+            headers=self.headers,
+            verify=False,
         )
         return response.json()["Token"]
-
 
     def host_list(self, ip=None, mac=None, name=None):
         """
@@ -56,7 +62,9 @@ class DNAC(object):
             url += "?" + "&".join(filters)
 
         # Make API request and return the response body
-        response = requests.request("GET", url, headers=self.headers, verify=False)
+        response = requests.request(
+            "GET", url, headers=self.headers, verify=False
+        )
         return response.json()["response"]
 
     @staticmethod
@@ -70,10 +78,13 @@ class DNAC(object):
             print("Error: No host with IP address {} was found".format(ip))
             sys.exit(1)
         if len(host) > 1:
-            print("Error: Multiple hosts with IP address {} were found".format(ip))
+            print(
+                "Error: Multiple hosts with IP address {} were found".format(
+                    ip
+                )
+            )
             print(json.dumps(host, indent=2))
             sys.exit(1)
-
 
     @staticmethod
     def print_host_details(host):
@@ -129,20 +140,23 @@ class DNAC(object):
         # Blank line at the end
         print("")
 
-
     def network_device_list(self, id=None):
         """
         Use the REST API to retrieve the list of network devices.
         If a device id is provided, return only that device
         """
-        url = "https://{}:{}/dna/intent/api/v1/network-device".format(self.address, self.port)
+        url = "https://{}:{}/dna/intent/api/v1/network-device".format(
+            self.address, self.port
+        )
 
         # Change URL to single device given an id
         if id:
             url += "/{}".format(id)
 
         # Make API request and return the response body
-        response = requests.request("GET", url, headers=self.headers, verify=False)
+        response = requests.request(
+            "GET", url, headers=self.headers, verify=False
+        )
 
         # Always return a list object, even if single device for consistency
         if id:
@@ -150,16 +164,18 @@ class DNAC(object):
 
         return response.json()["response"]
 
-
     def interface_details(self, id):
         """
         Use the REST API to retrieve details about an interface based on id.
         """
-        url = "https://{}:{}/dna/intent/api/v1/interface/{}".format(self.address, self.port, id)
+        url = "https://{}:{}/dna/intent/api/v1/interface/{}".format(
+            self.address, self.port, id
+        )
 
-        response = requests.request("GET", url, headers=self.headers, verify=False)
+        response = requests.request(
+            "GET", url, headers=self.headers, verify=False
+        )
         return response.json()["response"]
-
 
     @staticmethod
     def print_network_device_details(network_device):
@@ -184,7 +200,9 @@ class DNAC(object):
 
         # Print Standard Details
         print("Device Hostname: {}".format(network_device["hostname"]))
-        print("Management IP: {}".format(network_device["managementIpAddress"]))
+        print(
+            "Management IP: {}".format(network_device["managementIpAddress"])
+        )
         print("Device Location: {}".format(network_device["locationName"]))
         print("Device Type: {}".format(network_device["type"]))
         print("Platform Id: {}".format(network_device["platformId"]))
@@ -193,10 +211,14 @@ class DNAC(object):
         print("Software Version: {}".format(network_device["softwareVersion"]))
         print("Up Time: {}".format(network_device["upTime"]))
         print(
-            "Reachability Status: {}".format(network_device["reachabilityStatus"])
+            "Reachability Status: {}".format(
+                network_device["reachabilityStatus"]
+            )
         )  # noqa: E501
         print("Error Code: {}".format(network_device["errorCode"]))
-        print("Error Description: {}".format(network_device["errorDescription"]))
+        print(
+            "Error Description: {}".format(network_device["errorDescription"])
+        )
 
         # Blank line at the end
         print("")
@@ -235,14 +257,15 @@ class DNAC(object):
         # Blank line at the end
         print("")
 
-
     def run_flow_analysis(self, source_ip, destination_ip):
         """
         Use the REST API to initiate a Flow Analysis (Path Trace) from a given
         source_ip to destination_ip.  Function will wait for analysis to complete,
         and return the results.
         """
-        base_url = "https://{}:{}/dna/intent/api/v1/flow-analysis".format(self.address, self.port)
+        base_url = "https://{}:{}/dna/intent/api/v1/flow-analysis".format(
+            self.address, self.port
+        )
 
         # initiate flow analysis
         body = {"destIP": destination_ip, "sourceIP": source_ip}
@@ -259,7 +282,9 @@ class DNAC(object):
         # Check status of analysis and wait until completed
         flowAnalysisId = initiate_response.json()["response"]["flowAnalysisId"]
         detail_url = base_url + "/{}".format(flowAnalysisId)
-        detail_response = requests.get(detail_url, headers=self.headers, verify=False)
+        detail_response = requests.get(
+            detail_url, headers=self.headers, verify=False
+        )
         while (
             not detail_response.json()["response"]["request"]["status"]
             == "COMPLETED"
@@ -273,7 +298,6 @@ class DNAC(object):
         # Return the flow analysis details
         return detail_response.json()["response"]
 
-
     @staticmethod
     def print_flow_analysis_details(flow_analysis):
         """
@@ -283,7 +307,9 @@ class DNAC(object):
         """
         hops = flow_analysis["networkElementsInfo"]
 
-        print("Number of Hops from Source to Destination: {}".format(len(hops)))
+        print(
+            "Number of Hops from Source to Destination: {}".format(len(hops))
+        )
         print()
 
         # Print Details per hop

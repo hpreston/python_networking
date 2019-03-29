@@ -3,7 +3,7 @@ import json
 import requests
 import sys
 
-# Import DNAC Resources 
+# Import DNAC Resources
 from dnac_resources import dnac, headers
 
 # Diable InsecureRequestWarning
