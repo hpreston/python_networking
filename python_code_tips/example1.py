@@ -1,22 +1,21 @@
 #! /usr/bin/env python
 """Example Python script.
 
-Copyright (c) 2018 Cisco and/or its affiliates.
-"""
+Copyright (c) 2018 Cisco and/or its affiliates."""
 
 import os
-
 
 def say_hello(name):
     """Function that will say hello to someone.
     """
+
     # Print out a hello message to the name given
-    print("Hello there {name}. It's great to see you.".format(name=name))
+    print("Hello there {name}. It's great to see you.".format(name = name))
+
 
 
 def script_details():
-    """Function that reports by printing to screen some details about the
-    execution of the script."""
+    """Function that reports by printing to screen some details about the execution of the script."""
     # Get the current directory and print it out.
     cur_dir = os.getcwd()
     print("Current directory is {}".format(cur_dir))
@@ -38,6 +37,6 @@ if __name__ == "__main__":
     script_details()
 
     # List of names, and say hello to them
-    names = ["Hank", "Eric", "Stuart", "Bryan"]
+    names = ["Hank","Eric","Stuart","Bryan"]
     for name in names:
         say_hello(name)
