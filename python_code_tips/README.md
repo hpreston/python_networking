@@ -1,0 +1,2 @@
+# Python Code Tips
+This directory includes a selection of example scripts highlighting different Python coding tips discussed in workshops and presentations such as [Python Skills and Techniques for Network Engineers](https://developer.cisco.com/netdevops/live/#s02t01) from [NetDevOps Live!](https://developer.cisco.com/netdevops/live/)
