@@ -55,6 +55,6 @@ with ConnectHandler(ip = device["address"],
                     password = device["password"],
                     device_type = device["device_type"]) as ch:
 
-    config_set = interface_config.split("\n")
+    config_set = interface_configs.split("\n")
     output = ch.send_config_set(config_set)
     print(output)
