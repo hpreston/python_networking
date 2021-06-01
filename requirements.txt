@@ -10,6 +10,6 @@ pyang==1.7.5
 pyats==19.0
 PyYAML==5.1
 requests==2.21.0
-urllib3==1.24.1
+urllib3==1.26.5
 virlutils==0.8.4
 xmltodict==0.12.0

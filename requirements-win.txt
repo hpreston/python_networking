@@ -6,6 +6,6 @@ pyang==1.7.5
 pysnmp==4.4.4
 pyyaml>=4.2b1
 requests>=2.20.0
-urllib3==1.23
+urllib3==1.26.5
 virlutils==0.8.4
 xmltodict==0.11.0
