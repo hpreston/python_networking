@@ -1,4 +1,4 @@
-ipython==6.5.0
+ipython==7.16.3
 napalm==2.3.1
 ncclient==0.6.0
 netmiko==2.2.2
